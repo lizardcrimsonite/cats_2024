@@ -10,9 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_05_211837) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_05_214914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.bigint "publication_id", null: false
+    t.bigint "users_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publication_id"], name: "index_comments_on_publication_id"
+    t.index ["users_id"], name: "index_comments_on_users_id"
+  end
+
+  create_table "publications", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.datetime "when_went"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reactions", force: :cascade do |t|
+    t.bigint "publication_id", null: false
+    t.bigint "user_id", null: false
+    t.string "kind"
+    t.string "reaction_type"
+    t.bigint "comment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_reactions_on_comment_id"
+    t.index ["publication_id"], name: "index_reactions_on_publication_id"
+    t.index ["user_id"], name: "index_reactions_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +58,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_05_211837) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "comments", "publications"
+  add_foreign_key "comments", "users", column: "users_id"
+  add_foreign_key "reactions", "comments"
+  add_foreign_key "reactions", "publications"
+  add_foreign_key "reactions", "users"
 end
