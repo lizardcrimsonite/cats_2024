@@ -8,6 +8,7 @@ class PublicationsController < ApplicationController
 
   # GET /publications/1 or /publications/1.json
   def show
+    @comment = Comment.new
   end
 
   # GET /publications/new
