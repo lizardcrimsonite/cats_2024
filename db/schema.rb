@@ -37,7 +37,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_05_214914) do
     t.bigint "user_id", null: false
     t.string "kind"
     t.string "reaction_type"
-    t.bigint "comment_id", null: false
+    t.bigint "comment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["comment_id"], name: "index_reactions_on_comment_id"

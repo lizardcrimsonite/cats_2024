@@ -5,9 +5,9 @@ class CommentsController < ApplicationController
       @comment.user = current_user
       respond_to do |format|
           if @comment.save
-              format.html { redirect_topublication_path(@publication.id), notice: 'Comment was successfully created.' }
+              format.html { redirect_to publication_path(@publication.id), notice: 'Comment was successfully created.' }
           else
-              format.html { redirect_topublication_path(@publication.id), notice: 'Comment was not created.' }
+              format.html { redirect_to publication_path(@publication.id), notice: 'Comment was not created.' }
           end
       end
   end

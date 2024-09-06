@@ -1,6 +1,15 @@
 <p style="color: green"><%= notice %></p>
+<p style="color: green"><%= notice %></p>
 
-<%= render @publication %>
+
+ <%= render @publication %>
+
+  <% Publication::Kinds.each do |kind| %>
+  <%= button_to "#{Publication::KindsSpanish[kind]}", new_user_reaction_path(publication_id: @publication.id, reaction_type: "publication", kind: kind), method: :post %>
+  <% end %>
+
+
+<%= render 'comments/form' %>
 
 <div>
   <%= link_to "Edit this publication", edit_publication_path(@publication) %> |
